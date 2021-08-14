@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Autofac.Extensions.DependencyInjection;
 using Core.ConfigureOptions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,9 @@ namespace Host
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .Build();
 
             using (var scope = host.Services.CreateScope())
             {

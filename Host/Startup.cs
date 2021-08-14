@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
 using System.Text;
+using Autofac;
+using Autofac.Core;
 using Core.ConfigureOptions;
 using Core.Extensions;
 using Core.MapperConfigurations;
@@ -18,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Host
 {
@@ -78,7 +83,6 @@ namespace Host
         private void ConfigureScopedServices(IServiceCollection services)
         {
             services.AddScoped<IdentityValidator>();
-            services.AddScoped<IAuthorizationService, AuthorizationService>();
         }
 
         private void ConfigureAuthentication(IServiceCollection services)
@@ -111,6 +115,19 @@ namespace Host
         private void ConfigureOptions(IServiceCollection services)
         {
             services.Configure<AuthTokenOptions>(Configuration.GetSection("AuthTokenOptions"));
+        }
+
+        /// <summary>
+        /// Autofac modules registration
+        /// </summary>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes().Where(y => y.GetInheritanceChain().Contains(typeof(Module)))).ToList()
+                .ForEach(x =>
+                {
+                    if (Activator.CreateInstance(x) is IModule module) builder.RegisterModule(module);
+                });
         }
     }
 }

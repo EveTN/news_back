@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  news-es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    container_name: news-es
+    environment:
+      - node.name=news-es
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - news-es_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - news
+
+  news-kib:
+    image: docker.elastic.co/kibana/kibana:7.14.0
+    container_name: news-kib
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://news-es:9200
+      ELASTICSEARCH_HOSTS: http://news-es:9200
+    networks:
+      - news
+
+volumes:
+  news-es_data:
+    driver: local
+
+networks:
+  news:
+    driver: bridge

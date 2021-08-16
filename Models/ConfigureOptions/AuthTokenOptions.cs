@@ -1,4 +1,4 @@
-namespace Core.ConfigureOptions
+namespace Models.ConfigureOptions
 {
     /// <summary>
     /// Конфигурация для аутентификации

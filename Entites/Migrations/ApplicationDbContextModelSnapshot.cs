@@ -19,7 +19,7 @@ namespace Database.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("Database.Entities.Identity.Role", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace Database.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Database.Entities.Identity.User", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Database.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Database.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -239,25 +239,25 @@ namespace Database.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Database.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.UserRole", b =>
                 {
-                    b.HasOne("Database.Entities.Identity.Role", null)
+                    b.HasOne("Entites.Entities.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Database.Entities.Identity.Role", "Role")
+                    b.HasOne("Entites.Entities.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId1");
 
-                    b.HasOne("Database.Entities.Identity.User", null)
+                    b.HasOne("Entites.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Database.Entities.Identity.User", "User")
+                    b.HasOne("Entites.Entities.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId1");
 
@@ -268,7 +268,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Database.Entities.Identity.Role", null)
+                    b.HasOne("Entites.Entities.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +277,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Database.Entities.Identity.User", null)
+                    b.HasOne("Entites.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -286,7 +286,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Database.Entities.Identity.User", null)
+                    b.HasOne("Entites.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -295,19 +295,19 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Database.Entities.Identity.User", null)
+                    b.HasOne("Entites.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Database.Entities.Identity.Role", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Database.Entities.Identity.User", b =>
+            modelBuilder.Entity("Entites.Entities.Identity.User", b =>
                 {
                     b.Navigation("UserRoles");
                 });

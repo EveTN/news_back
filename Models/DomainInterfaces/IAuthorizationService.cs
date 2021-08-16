@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Core.Dtos.Identity;
 using Database.Entities.Identity;
+using Models.Dtos.Identity;
 
-namespace Core.Services.Auth
+namespace Models.DomainInterfaces
 {
     public interface IAuthorizationService
     {

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Database.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using ApplicationException = Core.Exception.ApplicationException;
 
 namespace Core.Validators
 {
@@ -38,7 +37,7 @@ namespace Core.Validators
                 context.RequestServices.GetService(typeof(IPasswordValidator<User>)) as IPasswordValidator<User>;
 
             if (passwordValidator == null)
-                throw new ApplicationException("Error retrieving the passwordValidator service");
+                throw new Exception("Error retrieving the passwordValidator service");
 
             return await passwordValidator.ValidateAsync(userManager, user, password);
         }

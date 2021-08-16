@@ -10,7 +10,6 @@ using Database;
 using Database.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Models.ConfigureOptions;
 using Models.DomainInterfaces;
@@ -25,18 +24,15 @@ namespace Core.Services.Auth
         private readonly ApplicationDbContext _context;
         private readonly IOptions<AuthTokenOptions> _authOptions;
         private readonly IdentityValidator _validator;
-        private readonly ILogger<AuthorizationService> _logger;
 
         public AuthorizationService(SignInManager<User> signInManager, UserManager<User> userManager,
-            ApplicationDbContext context, IOptions<AuthTokenOptions> authOptions, IdentityValidator validator,
-            ILogger<AuthorizationService> logger)
+            ApplicationDbContext context, IOptions<AuthTokenOptions> authOptions, IdentityValidator validator)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
             _authOptions = authOptions;
             _validator = validator;
-            _logger = logger;
         }
 
         /// <inheritdoc />
@@ -45,27 +41,31 @@ namespace Core.Services.Auth
             var user = await _userManager.FindByEmailAsync(payload.Email);
             if (user == null)
             {
-                _logger.LogError("Incorrect login or password", payload);
-                throw new ApplicationException("Incorrect login or password");
+                // logger
+                // return BadRequest("Incorrect login or password");
+                return default;
             }
 
             if (user.LockoutEnabled)
             {
-                _logger.LogError("User account is lockout", payload);
-                throw new ApplicationException("You do not have access to your account");
+                // logger
+                // return StatusCode(403, "Your account is lockout");
+                return default;
             }
 
             if (!user.EmailConfirmed)
             {
-                _logger.LogError("User account not confirmed", payload);
-                throw new ApplicationException("You do not have access to your account");
+                // logger
+                // return StatusCode(403, "You should confirm your email to get the access");
+                return default;
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, payload.Password, false, false);
             if (!result.Succeeded)
             {
-                _logger.LogError("Incorrect login or password", payload);
-                throw new ApplicationException("Incorrect login or password");
+                // logger
+                // return BadRequest("Incorrect login or password");
+                return default;
             }
 
             user.UserRoles = await _context.UserRoles.Where(x => x.UserId == user.Id).ToListAsync();
@@ -77,8 +77,8 @@ namespace Core.Services.Auth
         {
             if (!_validator.EmailValidation(payload.Email))
             {
-                _logger.LogError("Incorrect email", payload);
-                throw new ApplicationException("Incorrect email");
+                // logger
+                // return BadRequest("Invalid email");
             }
 
             var user = new User
@@ -101,8 +101,6 @@ namespace Core.Services.Auth
                 if (!result.Succeeded)
                 {
                     var errors = result.Errors.Select(x => x.Description);
-                    _logger.LogError("Errors occurred during registration", errors);
-                    throw new ApplicationException("Errors occurred during registration");
                 }
 
                 await _context.SaveChangesAsync();
@@ -124,7 +122,7 @@ namespace Core.Services.Auth
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User reset his own password", user.Email);
+                // logger
                 return password;
             }
 

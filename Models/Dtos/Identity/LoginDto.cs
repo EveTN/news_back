@@ -1,4 +1,4 @@
-namespace Core.Dtos.Identity
+namespace Models.Dtos.Identity
 {
     /// <summary>
     /// Dto для аутентификации

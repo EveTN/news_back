@@ -5,7 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DatabaseServices" />
+      <ProjectReference Include="..\..\Entites\Entites.csproj" />
+      <ProjectReference Include="..\Entites\Entites.csproj" />
     </ItemGroup>
 
 </Project>

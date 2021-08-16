@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Core.Dtos.Identity;
-using Core.Services.Auth;
 using Core.Validators;
 using Database.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models.DomainInterfaces;
+using Models.Dtos.Identity;
 
 namespace Host.Controllers
 {

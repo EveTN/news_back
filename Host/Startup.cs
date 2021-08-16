@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using Autofac;
 using Autofac.Core;
-using Core.ConfigureOptions;
 using Core.Extensions;
 using Core.MapperConfigurations;
 using Core.Services.Auth;
@@ -21,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Models.ConfigureOptions;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

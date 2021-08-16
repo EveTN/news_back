@@ -19,8 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Entites\Entites.csproj" />
       <ProjectReference Include="..\Core\Core.csproj" />
-      <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
 </Project>

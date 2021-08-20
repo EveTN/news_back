@@ -5,10 +5,9 @@ using Autofac;
 using Autofac.Core;
 using Core.Extensions;
 using Core.MapperConfigurations;
-using Core.Services.Auth;
 using Core.Validators;
-using Database;
-using Database.Entities.Identity;
+using Entities;
+using Entities.Entities.Identity;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,7 +39,7 @@ namespace Host
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -6,8 +6,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Core.Generators;
 using Core.Validators;
-using Database;
-using Database.Entities.Identity;
+using Entities;
+using Entities.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -68,7 +68,7 @@ namespace Core.Services.Auth
                 throw new ApplicationException("Incorrect login or password");
             }
 
-            user.UserRoles = await _context.UserRoles.Where(x => x.UserId == user.Id).ToListAsync();
+            // user.UserRoles = await _context.UserRoles.Where(x => x.UserId == user.Id).ToListAsync();
             return GenerateToken(user);
         }
 
@@ -144,13 +144,13 @@ namespace Core.Services.Auth
                 new(ClaimTypes.Email, user.Email),
             };
 
-            if (user.UserRoles != null)
+            /*if (user.UserRoles != null)
             {
-                foreach (var item in user.UserRoles)
+                /*foreach (var item in user.UserRoles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, item.Role.Name));
-                }
-            }
+                    claims.Add(new Claim(ClaimTypes.Role, item));
+                }#1#
+            }*/
 
             return new AuthTokenDto
             {

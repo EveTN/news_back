@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Core.Validators;
-using Database.Entities.Identity;
+using Entities.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

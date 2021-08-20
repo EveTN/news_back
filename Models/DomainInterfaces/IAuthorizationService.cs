@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Database.Entities.Identity;
+using Entities.Entities.Identity;
 using Models.Dtos.Identity;
 
 namespace Models.DomainInterfaces

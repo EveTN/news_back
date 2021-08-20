@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Database.Entities.Identity;
+using Entities.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ApplicationException = Core.Exception.ApplicationException;

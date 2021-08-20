@@ -16,7 +16,6 @@ namespace Host
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .Build();
 
             using (var scope = host.Services.CreateScope())
@@ -49,6 +48,7 @@ namespace Host
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }

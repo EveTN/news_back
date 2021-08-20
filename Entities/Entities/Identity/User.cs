@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace Database.Entities.Identity
+namespace Entities.Entities.Identity
 {
     /// <summary>
     /// Пользователт
@@ -36,7 +36,5 @@ namespace Database.Entities.Identity
         /// Дата удаления
         /// </summary>
         public DateTime? DeletedDt { get; set; }
-
-        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Entites\Entites.csproj" />
+      <ProjectReference Include="..\Entities\Entities.csproj" />
       <ProjectReference Include="..\Models\Models.csproj" />
     </ItemGroup>
 

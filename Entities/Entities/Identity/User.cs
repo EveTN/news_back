@@ -36,5 +36,15 @@ namespace Entities.Entities.Identity
         /// Дата удаления
         /// </summary>
         public DateTime? DeletedDt { get; set; }
+        
+        /// <summary>
+        /// Дата блокировки
+        /// </summary>
+        public DateTime? BlockedDt { get; set; }
+        
+        /// <summary>
+        /// Признак был ли сменен пароль после регистрации пользователя через администратора
+        /// </summary>
+        public bool IsChangedPassword { get; set; }
     }
 }

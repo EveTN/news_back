@@ -1,4 +1,5 @@
 using Autofac;
+using Core.Services;
 using Core.Services.Auth;
 using Models.DomainInterfaces;
 
@@ -9,6 +10,7 @@ namespace Core
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AuthorizationService>().As<IAuthorizationService>();
+            builder.RegisterType<AdministratorDomainService>().As<IAdministratorDomainService>();
         }
     }
 }

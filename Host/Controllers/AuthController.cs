@@ -10,7 +10,7 @@ using Models.Dtos.Identity;
 namespace Host.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;

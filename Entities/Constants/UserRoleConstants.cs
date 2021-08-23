@@ -3,31 +3,31 @@ namespace Entities.Constants
     /// <summary>
     /// Константы ролей
     /// </summary>
-    internal static class UserRoleConstants
+    public static class UserRoleConstants
     {
         /// <summary>
         /// Администратор
         /// </summary>
-        internal const string Administrator = "Administrator";
+        public const string Administrator = "Administrator";
 
         /// <summary>
         /// Корреспондент
         /// </summary>
-        internal const string Correspondent = "Correspondent";
+        public const string Correspondent = "Correspondent";
 
         /// <summary>
         /// Медиааналитик
         /// </summary>
-        internal const string MediaAnalyst = "MediaAnalyst";
+        public const string MediaAnalyst = "MediaAnalyst";
 
         /// <summary>
         /// Редактор
         /// </summary>
-        internal const string Editor = "Editor";
+        public const string Editor = "Editor";
 
         /// <summary>
         /// Корректор
         /// </summary>
-        internal const string Corrector = "Corrector";
+        public const string Corrector = "Corrector";
     }
 }

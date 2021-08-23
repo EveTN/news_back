@@ -39,7 +39,12 @@ namespace Host
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
 
-            services.AddIdentity<User, IdentityRole<Guid>>()
+            services.AddIdentity<User, IdentityRole<Guid>>(options =>
+                {
+                    options.Password.RequireNonAlphanumeric = false;
+                })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -74,6 +79,7 @@ namespace Host
         private static void AddMapster(IServiceCollection services)
         {
             var config = new TypeAdapterConfig();
+            // todo: валидация маппингов
             MapperConfiguration.Configure(config);
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();

@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Models.Dtos.Identity
+namespace Models.Dtos.Administrator
 {
     /// <summary>
-    /// Dto для регистрации пользователя
+    /// Dto для регистрации пользователя администратором
     /// </summary>
-    public class RegisterDto
+    public class CreateUserDto
     {
         /// <summary>
         /// Фамилия
@@ -31,14 +31,13 @@ namespace Models.Dtos.Identity
         public string Email { get; set; }
 
         /// <summary>
-        /// Пароль
-        /// </summary>
-        [Required]
-        public string Password { get; set; }
-
-        /// <summary>
         /// Номер телефона
         /// </summary>
         public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Роль
+        /// </summary>
+        public string Role { get; set; }
     }
 }

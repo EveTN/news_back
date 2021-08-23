@@ -4,12 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Core.DatabaseInterfaces;
 using Core.Generators;
 using Core.Validators;
 using Entities;
 using Entities.Entities.Identity;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Models.ConfigureOptions;
@@ -26,10 +27,12 @@ namespace Core.Services.Auth
         private readonly IOptions<AuthTokenOptions> _authOptions;
         private readonly IdentityValidator _validator;
         private readonly ILogger<AuthorizationService> _logger;
+        private readonly IMapper _mapper;
+        private readonly IUserDatabaseService _userDatabaseService;
 
         public AuthorizationService(SignInManager<User> signInManager, UserManager<User> userManager,
             ApplicationDbContext context, IOptions<AuthTokenOptions> authOptions, IdentityValidator validator,
-            ILogger<AuthorizationService> logger)
+            ILogger<AuthorizationService> logger, IMapper mapper, IUserDatabaseService userDatabaseService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -37,6 +40,8 @@ namespace Core.Services.Auth
             _authOptions = authOptions;
             _validator = validator;
             _logger = logger;
+            _mapper = mapper;
+            _userDatabaseService = userDatabaseService;
         }
 
         /// <inheritdoc />
@@ -81,36 +86,17 @@ namespace Core.Services.Auth
                 throw new ApplicationException("Incorrect email");
             }
 
-            var user = new User
+            var user = _mapper.Map<User>(payload);
+
+            var result = await _userDatabaseService.CreateUserAsync(user, payload.Password);
+            if (result != default && !result.Succeeded)
             {
-                Email = payload.Email,
-                EmailConfirmed = true,
-                UserName = payload.Email,
-                PhoneNumber = payload.PhoneNumber,
-                PhoneNumberConfirmed = false,
-                TwoFactorEnabled = false,
-                CreatedDt = DateTime.Now,
-                FirstName = payload.FirstName,
-                LastName = payload.LastName,
-                MiddleName = payload.MiddleName
-            };
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                var result = await _userManager.CreateAsync(user, payload.Password);
-                if (!result.Succeeded)
-                {
-                    var errors = result.Errors.Select(x => x.Description);
-                    _logger.LogError("Errors occurred during registration", errors);
-                    throw new ApplicationException("Errors occurred during registration");
-                }
-
-                await _context.SaveChangesAsync();
-
-                await transaction.CommitAsync();
+                var errors = result.Errors.Select(x => x.Description);
+                _logger.LogError("Errors occurred during registration", errors);
+                throw new ApplicationException("Errors occurred during registration");
             }
-
-            // logger
+            
+            _logger.LogInformation("User with was created");
         }
 
         /// <inheritdoc />
